@@ -1,10 +1,12 @@
 fn main() {
-    println!("Hello, world!");
 
-    calculate_weight_on_mars(100.0);
+    println!("Weight on Mars: {}kg",   calculate_weight_on_mars(100.0));
+
+
+  
 }
 
 
 fn calculate_weight_on_mars(weight: f32) -> f32{
-    return 50.0;
+    return (weight / 9.81) * 3.711;
 }
