@@ -3,17 +3,29 @@ use std::io;
 
 fn main() {
     let mut input = String::new();
-    let s1 = &input;
-    let s2 = &input;
-    println!("{} {}", s1,s2);
-    
-    some_fn(&mut input);
+    // let s1 = &input;
+    // let s2 = &input;
+    // println!("{} {}", s1,s2);
+     
+    // some_fn(&mut input);
     io::stdin().read_line(&mut input);
-    let mars_weight: f32 = calculate_weight_on_mars(100.0);
+
+    borrow_string(&input);
+    own_string(input);
+
+
+    // let mars_weight: f32 = calculate_weight_on_mars(100.0);
     //mars_weight = mars_weight * 1000.0;
-    println!("Weight on Mars: {}kg", mars_weight ); 
+    // println!("Weight on Mars: {}kg", mars_weight ); 
 }
 
+fn borrow_string(s: &String){
+    println!("{}",s)
+}
+
+fn own_string(s: String){
+    println("{}",s)
+}
 
 fn calculate_weight_on_mars(weight: f32) -> f32{
     return (weight / 9.81) * 3.711;
