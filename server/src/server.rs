@@ -18,10 +18,11 @@
             let listener = TcpListener::bind(&self.addr).unwrap();
 
             loop {
+                listener.accept();
 
-                // break;
-                // continues;
             }
+
+            let tup = (5, "a", listener);
               
         }
     }
