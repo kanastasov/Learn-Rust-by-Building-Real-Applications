@@ -25,10 +25,15 @@
                     Ok((mut stream, _)) => {
                         // let a = [1,2,3,4];
                         // arr(&a);
-                        let mut buffer = [0; 1024];
-                     stream.read();
+                     let mut buffer = [0; 1024];
+                     match stream.read(&mut buffer){
+                        Ok(_) => {
+                            println!("Recieved a request: {}", String::from_utf8_lossy(&buffer));
+                        }
+                        Err(e) => println!("Failed to read from connect: {}",e),
+                     }
                     },
-                    Err(e) => println!("Failed to establish a connection: ()",e),
+                    Err(e) => println!("Failed to establish a connection: {}",e),
                 }
                 let res = listener.accept();
                 if res.is_err(){
