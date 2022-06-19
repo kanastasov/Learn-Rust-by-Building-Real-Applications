@@ -17,7 +17,28 @@ pub struct Request {
     type Error = String;
 
     fn try_from(value: &[u8]) -> Result <Self, Self:Error>{
+        let string = String::from("asd");
+        string.encrypt();
+        buf.encrypt();
+
+
         unimplemented!()
     }
 
  }
+
+//  trait Encrypt {
+//     fn encrypt (&self) -> Self;
+//  }
+
+//  impl Encrypt for String {
+//     fn encrypt(&self) -> Self {
+//         unimplemented!()
+//     }
+//  }
+
+//  impl Encrypt for &[u8]{
+//     fn encrypt(&self) -> Self {
+//         unimplemented!()
+//     }
+//  }
