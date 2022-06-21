@@ -9,8 +9,8 @@ use std::fmt::Debug;
 use std::str;
 
 pub struct Request {
-     path: String,
-     query_string:Option<String>,
+     path: &str,
+     query_string:Option<&str>,
      method: Method,
 
  } 
@@ -82,7 +82,13 @@ pub struct Request {
          query_string = Some(&path[i..]);
          path = &path[..i];
         }
-                unimplemented!()
+
+        Ok(Self {
+         path: path,
+         query_string, 
+         method,
+
+        })
     }
 
  }
