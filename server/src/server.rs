@@ -33,7 +33,8 @@
                      match stream.read(&mut buffer){
                         Ok(_) => {
                             println!("Recieved a request: {:?}", String::from_utf8_lossy(&buffer));
-
+                            buffer[1] = 0;
+                            // let a = request;
                             Request::try_from(&buffer[..]);
 
 

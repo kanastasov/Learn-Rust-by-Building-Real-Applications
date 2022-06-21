@@ -8,9 +8,9 @@ use std::fmt::Formattter;
 use std::fmt::Debug;      
 use std::str;
 
-pub struct Request {
-     path: &str,
-     query_string:Option<&str>,
+pub struct Request<'buf> {
+     path: &'buf str,
+     query_string:Option<& 'buf str>,
      method: Method,
 
  } 
@@ -19,11 +19,11 @@ pub struct Request {
     fn from_byte_array(buf: &[u8]) -> Result<Self, String> {}
  }
 
- impl TryFrom<&[u8]> for Request{
+ impl<'buf> TryFrom<& 'buf [u8]> for Request<'buf>{
     type Error = ParseError;
 
 
-    fn try_from(value: &[u8]) -> Result <Self, Self:Error>{
+    fn try_from<'a>(buf &'a [u8]) -> Result <Self, Self:Error>{
         let string = String::from("asd");
         string.encrypt();
         buf.encrypt();
@@ -93,7 +93,7 @@ pub struct Request {
 
  }
 
- fn get_next_word(request: & str) -> Option<(&str, &str)> {
+ fn get_next_word(request: & str, b : &'b str) -> Option<(&'a str, &'b str)> {
    for(i, c) in request.chars().enumerate(){
       if c ==  ' '{
          return Some((&request[..i], &request[i+1..]))
