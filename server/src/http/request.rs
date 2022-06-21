@@ -46,8 +46,18 @@ pub struct Request {
 
         let request = str::from_utf8(buf)?;
 
+      //   match get_next_word(request) [
+      //    Some((method, request)) => {},
+      //    None => return Err(ParseError::InvalidRequest),
+      //   ]
 
-        unimplemented!()
+        let (method, request ) = get_next_word(request).ok_or(ParseError::InvalidRequest)?;
+        let (path, request ) = get_next_word(request).ok_or(ParseError::InvalidRequest)?;
+        let (protocol,_) = get_next_word(request).ok_or(ParseError::InvalidRequest)?;
+        if protocol != "HTTP/1.1"{
+            return Err(ParseError::InvalidProtocol);
+        } 
+                unimplemented!()
     }
 
  }
