@@ -20,7 +20,7 @@ pub struct Request {
  }
 
  impl TryFrom<&[u8]> for Request{
-    type Error = String;
+    type Error = ParseError;
 
 
     fn try_from(value: &[u8]) -> Result <Self, Self:Error>{
@@ -57,6 +57,8 @@ pub struct Request {
         if protocol != "HTTP/1.1"{
             return Err(ParseError::InvalidProtocol);
         } 
+
+        let method: Method = method.parse()?;
                 unimplemented!()
     }
 
@@ -98,6 +100,13 @@ impl ParseError{
       }
    }
 }
+
+impl From<MethodError> for ParseError{
+   fn from (_: MethodError) -> Self {
+      Self::InvalidMethod
+   }
+}
+
 
 impl From<Utf8Error> for ParseError{
    fn from (_: Utf8Error) -> Self {
