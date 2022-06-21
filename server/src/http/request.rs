@@ -1,3 +1,4 @@
+use std::str::Utf8Error;
 use super::method::Method;
 use std::convert::TryFrom;
 use std::error::Error;
@@ -5,6 +6,7 @@ use std::fmt::Display;
 use std::fmt::Result as FmtResult;
 use std::fmt::Formattter;
 use std::fmt::Debug;      
+use std::str;
 
 pub struct Request {
      path: String,
@@ -26,7 +28,23 @@ pub struct Request {
         string.encrypt();
         buf.encrypt();
 
+        match str: from_utf8(buf){
+         Ok(request) => {
 
+         },
+         Err(_) => return Err(ParseError::InvalidEncoding),
+
+        }
+
+        match str: from_utf8(buf).or(Err(ParseError::InvalidEncoding)){
+         Ok(request) => {
+
+         },
+         Err(e) => return Err(e),
+
+        }
+
+        let request = str::from_utf8(buf)?;
         unimplemented!()
     }
 
@@ -59,6 +77,14 @@ impl ParseError{
       }
    }
 }
+
+impl From<Utf8Error> for ParseError{
+   fn from (_: Utf8Error) -> Self {
+      Self::InvalidEncoding
+   }
+}
+
+
 impl Error for ParseError{}
 
 
