@@ -9,6 +9,7 @@ use std::fmt::Debug;
 use std::str;
 use super::QueryString;
 
+#[derive(Debug)]
 pub struct Request<'buf> {
      path: &'buf str,
      query_string:Option<QueryString<'buf>>,
