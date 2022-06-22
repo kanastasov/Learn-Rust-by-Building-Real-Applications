@@ -2,6 +2,15 @@ use super::server::Handler;
 use super::http::{Request,Response,StatusCode, Method};
 pub struct WebsiteHandler;
 
+pub struct WebsiteHandler {
+    public_path:String
+}
+
+impl WebsiteHandler{
+    pub fn new (public_path: String) -> Self {
+        Self{public_path}
+    }
+}
 impl Handler for WebsiteHandler{
     fn handler_request(&mut slef, request:&Request) -> Response {
         //Response::new(StatusCode::Ok, Some("<h1>Test</h1>".to_string()))
