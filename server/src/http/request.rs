@@ -7,10 +7,11 @@ use std::fmt::Result as FmtResult;
 use std::fmt::Formattter;
 use std::fmt::Debug;      
 use std::str;
+use super::QueryString;
 
 pub struct Request<'buf> {
      path: &'buf str,
-     query_string:Option<& 'buf str>,
+     query_string:Option<QueryString<'buf>>,
      method: Method,
 
  } 
@@ -79,7 +80,7 @@ pub struct Request<'buf> {
 
 
         if let Some(i) = path.find('?'){
-         query_string = Some(&path[i..]);
+         query_string = Some(QueryString::from(&path[i..]));
          path = &path[..i];
         }
 
