@@ -4,6 +4,7 @@
     use std::convert::TryInto;
     use std::io::Read;
     use create::http::Request;
+    use create::http::{Request, Response, StatusCode};
 
     pub struct Server {
         addr: String,
@@ -37,10 +38,13 @@
                             // let a = request;
                             match Request::try_from(&buffer[..]);{
                                 Ok(request) => {
-                                    dbg!(request);
+                                     dbg!(request); 
+                                     let response = Response::new(StatusCode::Ok, Some("<h1> HTML works parse!! </h1>".to_string()));
+                                     response.send(&mut stream)
+                                    //  write!(stream,"{}", response);
                                 }
                             }
-
+ 
 
 
                         }
