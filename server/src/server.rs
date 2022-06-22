@@ -3,8 +3,19 @@
     use std::convert::TryFrom;
     use std::convert::TryInto;
     use std::io::Read;
-    use create::http::Request;
+    //use create::http::Request;
     use create::http::{Request, Response, StatusCode};
+
+
+    pub trait Handler {
+        fn handle_request(&mut self, request: &Request) -> Response;
+
+        fn handle_bad_request(&mut self, e: &ParseError) -> Response{
+            println!("Failed to parse request: {}",e);
+            Response::new(StatusCode::BadRequest,None);
+        }
+    }
+
 
     pub struct Server {
         addr: String,
@@ -21,7 +32,7 @@
             }
         }
 
-        pub fn run( self) {
+        pub fn run(self, mut handler: impl Handler) {
             println!("Listening on {}", self.addr);
             let listener = TcpListener::bind(&self.addr).unwrap();
 
@@ -38,10 +49,15 @@
                             // let a = request;
                             match Request::try_from(&buffer[..]);{
                                 Ok(request) => {
-                                     dbg!(request); 
-                                     let response = Response::new(StatusCode::Ok, Some("<h1> HTML works parse!! </h1>".to_string()));
-                                     response.send(&mut stream)
+                                    //  dbg!(request); 
+                                    //  let response = Response::new(StatusCode::Ok, Some("<h1> HTML works parse!! </h1>".to_string()));
+                                    //  response.send(&mut stream)
                                     //  write!(stream,"{}", response);
+                                    handler.handle_request(&request);
+
+                                }
+                                Err(e) => {
+                                    handler.handle_bad_request(&e)
                                 }
                             }
  
