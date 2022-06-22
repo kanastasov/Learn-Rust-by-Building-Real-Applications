@@ -17,6 +17,20 @@ pub struct Request<'buf> {
 
  } 
 
+ impl<'buf> Request<'buf> {
+   pub fn path(&self) -> &str{
+      &self.path
+   }
+
+   pub fn method(&slef) -> &Method {
+      &slef.method
+   }
+
+   pub fn query_string(&self) -> Option<&QueryString>{
+      &self.query_string.as_ref()
+   }
+ }
+
  impl Request {
     fn from_byte_array(buf: &[u8]) -> Result<Self, String> {}
  }
